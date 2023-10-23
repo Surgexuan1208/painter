@@ -25,6 +25,7 @@ namespace painter
         Brush strokebrush = new SolidColorBrush(Colors.Red);
         int strokethickness = 1;
         Point start, end;
+        int debuger=0;
         public MainWindow()
         {
             InitializeComponent();
@@ -45,6 +46,22 @@ namespace painter
 
         private void myCanvas_MouseMove(object sender, MouseEventArgs e)
         {
+            if (debuger == 1 && e.LeftButton != MouseButtonState.Pressed)
+            {
+                switch (shapetype)
+                {
+                    case "Line":
+                        var line = myCanvas.Children.OfType<Line>().LastOrDefault();
+                        line.Stroke = strokebrush;
+                        line.StrokeThickness = strokethickness;
+                        break;
+                    case "Rectangle":
+                        break;
+                    case "Ellipse":
+                        break;
+                }
+                debuger = 0;
+            }
             end = e.GetPosition(myCanvas);
             DisplayStatus();
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -66,6 +83,7 @@ namespace painter
 
         private void myCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            debuger = 1;
             start = e.GetPosition(myCanvas);
             myCanvas.Cursor = Cursors.Cross;
             switch (shapetype)
@@ -94,6 +112,7 @@ namespace painter
                     var line = myCanvas.Children.OfType<Line>().LastOrDefault();
                     line.Stroke = strokebrush;
                     line.StrokeThickness = strokethickness;
+                    debuger = 0;
                     break;
                 case "Rectangle":
                     break;
@@ -101,7 +120,6 @@ namespace painter
                     break;
             }
         }
-
         private void DrawLine(Color c, int v)
         {
             Brush stroke =new SolidColorBrush(c);
