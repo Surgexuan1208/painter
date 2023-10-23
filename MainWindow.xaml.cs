@@ -56,8 +56,13 @@ namespace painter
                         line.StrokeThickness = strokethickness;
                         break;
                     case "Rectangle":
+                        var rectangle = myCanvas.Children.OfType<Rectangle>().LastOrDefault();
+                        rectangle.Stroke = strokebrush;
+                        rectangle.StrokeThickness = strokethickness;
+                        rectangle.Fill = fillbrush;
                         break;
                     case "Ellipse":
+
                         break;
                 }
                 debuger = 0;
@@ -74,6 +79,16 @@ namespace painter
                         line.Y2 = end.Y;
                         break;
                     case "Rectangle":
+                        Point origin = new Point
+                        {
+                            X = Math.Min(start.X, end.X),
+                            Y = Math.Min(start.Y, end.Y)
+                        };
+                        var rect = myCanvas.Children.OfType<Rectangle>().LastOrDefault();
+                        rect.SetValue(Canvas.LeftProperty, origin.X);
+                        rect.SetValue(Canvas.TopProperty, origin.Y);
+                        rect.Width = Math.Abs(start.X - end.X);
+                        rect.Height = Math.Abs(start.Y - end.Y);
                         break;
                     case "Ellipse":
                         break;
@@ -89,7 +104,16 @@ namespace painter
             switch (shapetype)
             {
                 case "Line":
-                    DrawLine(Colors.Gray, 1);
+                    Line myline = new Line
+                    {
+                        Stroke = Brushes.Gray,
+                        X1 = start.X,
+                        Y1 = start.Y,
+                        X2 = end.X,
+                        Y2 = end.Y,
+                        StrokeThickness = 1,
+                    };
+                    myCanvas.Children.Add(myline);
                     break;
                 case "Rectangle":
                     var rec = new Rectangle
@@ -109,7 +133,6 @@ namespace painter
             }
             DisplayStatus();
         }
-
         private void DisplayStatus()
         {
             int linecount = myCanvas.Children.OfType<Line>().Count();
@@ -118,18 +141,21 @@ namespace painter
             poslabel.Content = $"座標點:({Math.Round(start.X)},{Math.Round(start.Y)}),({Math.Round(end.X)},{Math.Round(end.Y)})";
             shapelabel.Content = $"Line:{linecount} Rectangle:{rectanglecount} Ellipse:{ellipsecount}";
         }
-
         private void myCanvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            debuger = 0;
             switch (shapetype)
             {
                 case "Line":
                     var line = myCanvas.Children.OfType<Line>().LastOrDefault();
                     line.Stroke = strokebrush;
                     line.StrokeThickness = strokethickness;
-                    debuger = 0;
                     break;
                 case "Rectangle":
+                    var rectangle = myCanvas.Children.OfType<Rectangle>().LastOrDefault();
+                    rectangle.Stroke = strokebrush;
+                    rectangle.StrokeThickness = strokethickness;
+                    rectangle.Fill = fillbrush;
                     break;
                 case "Ellipse":
                     break;
@@ -142,20 +168,6 @@ namespace painter
         private void fillcolorpicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
         {
             fillbrush = new SolidColorBrush((Color)fillcolorpicker.SelectedColor);
-        }
-        private void DrawLine(Color c, int v)
-        {
-            Brush stroke =new SolidColorBrush(c);
-            Line myline = new Line
-            {
-                Stroke = stroke,
-                X1 = start.X,
-                Y1 = start.Y,
-                X2 = end.X,
-                Y2 = end.Y,
-                StrokeThickness = v,
-            };
-            myCanvas.Children.Add(myline);
         }
     }
 }
