@@ -6,7 +6,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:painter"
         mc:Ignorable="d"
-        Title="2023 WPF Painter" Height="730" Width="1050">
+        Title="2023 WPF Painter" Height="732" Width="1050">
     <DockPanel LastChildFill="False">
         <Menu DockPanel.Dock="Top" Height="25">
             <MenuItem Header="檔案" VerticalAlignment="Center">
@@ -28,7 +28,9 @@
                 <RadioButton Content="橢圓" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18" Height="29" Width="60" Click="ShapeButton_Click" Tag="Ellipse"/>
             </ToolBar>
         </ToolBarTray>
-        <Canvas x:Name="myCanvas" DockPanel.Dock="Top" Background="#FFFFFDF5" Height="605" MouseLeftButtonDown="myCanvas_MouseLeftButtonDown" MouseMove="myCanvas_MouseMove"/>
-        <StatusBar x:Name="myStatusBar" DockPanel.Dock="Bottom" Height="40"/>
+        <Canvas x:Name="myCanvas" DockPanel.Dock="Top" Background="#FFFFFDF5" Height="590" MouseLeftButtonDown="myCanvas_MouseLeftButtonDown" MouseMove="myCanvas_MouseMove" MouseLeftButtonUp="myCanvas_MouseLeftButtonUp"/>
+        <StatusBar x:Name="myStatusBar" DockPanel.Dock="Bottom" Height="40">
+            <Label x:Name="poslabel" Content="座標點:(0,0),(0,0)" Margin="50,0,0,0" Width="212" FontSize="16"/>
+        </StatusBar>
     </DockPanel>
 </Window>
