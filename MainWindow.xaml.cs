@@ -62,7 +62,10 @@ namespace painter
                         rectangle.Fill = fillbrush;
                         break;
                     case "Ellipse":
-
+                        var ellipse = myCanvas.Children.OfType<Ellipse>().LastOrDefault();
+                        ellipse.Stroke = strokebrush;
+                        ellipse.StrokeThickness = strokethickness;
+                        ellipse.Fill = fillbrush;
                         break;
                 }
                 debuger = 0;
@@ -70,20 +73,20 @@ namespace painter
             end = e.GetPosition(myCanvas);
             DisplayStatus();
             if (e.LeftButton == MouseButtonState.Pressed)
-            {
+            {                        
+                Point origin = new Point
+                {
+                    X = Math.Min(start.X, end.X),
+                    Y = Math.Min(start.Y, end.Y)
+                };
                 switch (shapetype)
                 {
                     case "Line":
                         var line = myCanvas.Children.OfType<Line>().LastOrDefault();
-                        line.X2 = end.X;
-                        line.Y2 = end.Y;
+                        line.X2 = Math.Round(end.X);
+                        line.Y2 = Math.Round(end.Y);
                         break;
                     case "Rectangle":
-                        Point origin = new Point
-                        {
-                            X = Math.Min(start.X, end.X),
-                            Y = Math.Min(start.Y, end.Y)
-                        };
                         var rect = myCanvas.Children.OfType<Rectangle>().LastOrDefault();
                         rect.SetValue(Canvas.LeftProperty, origin.X);
                         rect.SetValue(Canvas.TopProperty, origin.Y);
@@ -91,6 +94,11 @@ namespace painter
                         rect.Height = Math.Abs(start.Y - end.Y);
                         break;
                     case "Ellipse":
+                        var elli = myCanvas.Children.OfType<Ellipse>().LastOrDefault();
+                        elli.SetValue(Canvas.LeftProperty, origin.X);
+                        elli.SetValue(Canvas.TopProperty, origin.Y);
+                        elli.Width = Math.Abs(start.X - end.X);
+                        elli.Height = Math.Abs(start.Y - end.Y);
                         break;
                 }
             }
@@ -120,15 +128,22 @@ namespace painter
                     {
                         Stroke = Brushes.Gray,
                         StrokeThickness = 1,
-                        Fill = Brushes.LightGray,
-                        Width = 30,
-                        Height = 50
+                        Fill = Brushes.LightGray
                     };
                     myCanvas.Children.Add(rec);
                     rec.SetValue(LeftProperty, start.X);
                     rec.SetValue(TopProperty, start.Y);
                     break;
                 case "Ellipse":
+                    var ell = new Ellipse
+                    {
+                        Stroke = Brushes.Gray,
+                        StrokeThickness = 1,
+                        Fill = Brushes.LightGray
+                    };
+                    myCanvas.Children.Add(ell);
+                    ell.SetValue(LeftProperty, start.X);
+                    ell.SetValue(TopProperty, start.Y);
                     break;
             }
             DisplayStatus();
@@ -158,12 +173,22 @@ namespace painter
                     rectangle.Fill = fillbrush;
                     break;
                 case "Ellipse":
+                    var ellipse = myCanvas.Children.OfType<Ellipse>().LastOrDefault();
+                    ellipse.Stroke = strokebrush;
+                    ellipse.StrokeThickness = strokethickness;
+                    ellipse.Fill = fillbrush;
                     break;
             }
+            myCanvas.Cursor = Cursors.Arrow;
         }
         private void strokecolorpicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
         {
             strokebrush = new SolidColorBrush((Color)strokecolorpicker.SelectedColor);
+        }
+        private void clearbtn_Click(object sender, RoutedEventArgs e)
+        {
+            myCanvas.Children.Clear();
+            DisplayStatus();
         }
         private void fillcolorpicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
         {
