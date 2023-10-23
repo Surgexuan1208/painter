@@ -21,16 +21,16 @@ namespace painter
     public partial class MainWindow : Window
     {
         string shapetype="Line";
-        Color strokecolor = Colors.Red;
         Brush strokebrush = new SolidColorBrush(Colors.Red);
+        Brush fillbrush = new SolidColorBrush(Colors.Yellow);
         int strokethickness = 1;
         Point start, end;
         int debuger=0;
         public MainWindow()
         {
             InitializeComponent();
-            strokecolorpicker.SelectedColor = strokecolor;
-            
+            strokecolorpicker.SelectedColor = Colors.Red;
+            fillcolorpicker.SelectedColor = Colors.Yellow;
         }
         
         private void ShapeButton_Click(object sender, RoutedEventArgs e)
@@ -92,6 +92,17 @@ namespace painter
                     DrawLine(Colors.Gray, 1);
                     break;
                 case "Rectangle":
+                    var rec = new Rectangle
+                    {
+                        Stroke = Brushes.Gray,
+                        StrokeThickness = 1,
+                        Fill = Brushes.LightGray,
+                        Width = 30,
+                        Height = 50
+                    };
+                    myCanvas.Children.Add(rec);
+                    rec.SetValue(LeftProperty, start.X);
+                    rec.SetValue(TopProperty, start.Y);
                     break;
                 case "Ellipse":
                     break;
@@ -101,7 +112,11 @@ namespace painter
 
         private void DisplayStatus()
         {
+            int linecount = myCanvas.Children.OfType<Line>().Count();
+            int rectanglecount = myCanvas.Children.OfType<Rectangle>().Count();
+            int ellipsecount = myCanvas.Children.OfType<Ellipse>().Count();
             poslabel.Content = $"座標點:({Math.Round(start.X)},{Math.Round(start.Y)}),({Math.Round(end.X)},{Math.Round(end.Y)})";
+            shapelabel.Content = $"Line:{linecount} Rectangle:{rectanglecount} Ellipse:{ellipsecount}";
         }
 
         private void myCanvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -119,6 +134,14 @@ namespace painter
                 case "Ellipse":
                     break;
             }
+        }
+        private void strokecolorpicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
+        {
+            strokebrush = new SolidColorBrush((Color)strokecolorpicker.SelectedColor);
+        }
+        private void fillcolorpicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
+        {
+            fillbrush = new SolidColorBrush((Color)fillcolorpicker.SelectedColor);
         }
         private void DrawLine(Color c, int v)
         {

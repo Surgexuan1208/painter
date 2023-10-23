@@ -15,14 +15,16 @@
             <MenuItem Header="工具" VerticalAlignment="Center"/>
         </Menu>
         <ToolBarTray DockPanel.Dock="Top" Height="40" Background="#FFECDEDD">
-            <ToolBar HorizontalAlignment="Center" Height="40" VerticalAlignment="Center" Width="500" Background="#FF93C6FF">
+            <ToolBar HorizontalAlignment="Center" Height="40" VerticalAlignment="Center" Width="624" Background="#FF93C6FF">
                 <Label Content="筆刷色彩" VerticalAlignment="Center" FontSize="18"/>
-                <xctk:ColorPicker x:Name="strokecolorpicker" Width="150" DisplayColorAndName="True"/>
+                <xctk:ColorPicker x:Name="strokecolorpicker" Width="100" DisplayColorAndName="True" SelectedColorChanged="strokecolorpicker_SelectedColorChanged"/>
                 <Label Content="筆刷大小" VerticalAlignment="Center" FontSize="18"/>
                 <Slider x:Name="stroke_slider" Width="120" Value="1" Minimum="1" Maximum="72" VerticalAlignment="Center" IsSnapToTickEnabled="True" ValueChanged="stroke_ValueChanged"/>
                 <Label Content="{Binding Value, ElementName=stroke_slider}" VerticalContentAlignment="Center" FontSize="18"/>
+                <Label Content="填滿色彩" VerticalAlignment="Center" FontSize="18"/>
+                <xctk:ColorPicker x:Name="fillcolorpicker" Width="100" DisplayColorAndName="True" SelectedColorChanged="fillcolorpicker_SelectedColorChanged"/>
             </ToolBar>
-            <ToolBar HorizontalAlignment="Center" Height="40" VerticalAlignment="Center" Width="350">
+            <ToolBar HorizontalAlignment="Center" Height="40" VerticalAlignment="Center" Width="212">
                 <RadioButton Content="直線" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18" Height="29" Width="60" Click="ShapeButton_Click" Tag="Line" IsChecked="True"/>
                 <RadioButton Content="矩形" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18" Height="29" Width="60" Click="ShapeButton_Click" Tag="Rectangle"/>
                 <RadioButton Content="橢圓" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18" Height="29" Width="60" Click="ShapeButton_Click" Tag="Ellipse"/>
@@ -30,7 +32,10 @@
         </ToolBarTray>
         <Canvas x:Name="myCanvas" DockPanel.Dock="Top" Background="#FFFFFDF5" Height="590" MouseLeftButtonDown="myCanvas_MouseLeftButtonDown" MouseMove="myCanvas_MouseMove" MouseLeftButtonUp="myCanvas_MouseLeftButtonUp"/>
         <StatusBar x:Name="myStatusBar" DockPanel.Dock="Bottom" Height="40">
-            <Label x:Name="poslabel" Content="座標點:(0,0),(0,0)" Margin="50,0,0,0" Width="212" FontSize="16"/>
+            <StackPanel Margin="50,0,0,0" Orientation="Horizontal">
+                <Label x:Name="poslabel" Content="座標點:(0,0),(0,0)"  Width="212" FontSize="16"/>
+                <Label x:Name="shapelabel" Content=""  Width="212" FontSize="16"/>
+            </StackPanel>
         </StatusBar>
     </DockPanel>
 </Window>
