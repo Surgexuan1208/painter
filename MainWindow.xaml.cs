@@ -32,18 +32,15 @@ namespace painter
             strokecolorpicker.SelectedColor = Colors.Red;
             fillcolorpicker.SelectedColor = Colors.Yellow;
         }
-        
         private void ShapeButton_Click(object sender, RoutedEventArgs e)
         {
             var targetbutton = sender as RadioButton;
             shapetype = targetbutton.Tag.ToString();
         }
-
         private void stroke_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             strokethickness = (int)stroke_slider.Value;
         }
-
         private void myCanvas_MouseMove(object sender, MouseEventArgs e)
         {
             if (debuger == 1 && e.LeftButton != MouseButtonState.Pressed)
@@ -103,7 +100,6 @@ namespace painter
                 }
             }
         }
-
         private void myCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             debuger = 1;
