@@ -29,7 +29,7 @@ namespace painter
         public MainWindow()
         {
             InitializeComponent();
-            strokecolorpicker.SelectedColor = Colors.Red;
+            strokecolorpicker.SelectedColor = Color.FromArgb(255,255,0,0);
             fillcolorpicker.SelectedColor = Colors.Yellow;
         }
         private void ShapeButton_Click(object sender, RoutedEventArgs e)
