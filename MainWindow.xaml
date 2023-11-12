@@ -11,6 +11,7 @@
         <Menu DockPanel.Dock="Top" Height="25">
             <MenuItem Header="檔案" VerticalAlignment="Center">
                 <MenuItem Header="新增畫布"/>
+                <MenuItem Header="儲存畫布" Click="saveCanvas_Click"/>
             </MenuItem>
             <MenuItem Header="工具" VerticalAlignment="Center">
                 <MenuItem x:Name="clearbtn" Header="清除畫布" Click="clearbtn_Click"/>
@@ -26,10 +27,43 @@
                 <Label Content="填滿色彩" VerticalAlignment="Center" FontSize="18"/>
                 <xctk:ColorPicker x:Name="fillcolorpicker" Width="100" DisplayColorAndName="True" SelectedColorChanged="fillcolorpicker_SelectedColorChanged"/>
             </ToolBar>
-            <ToolBar HorizontalAlignment="Center" Height="40" VerticalAlignment="Center" Width="212">
-                <RadioButton Content="直線" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18" Height="29" Width="60" Click="ShapeButton_Click" Tag="Line" IsChecked="True"/>
-                <RadioButton Content="矩形" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18" Height="29" Width="60" Click="ShapeButton_Click" Tag="Rectangle"/>
-                <RadioButton Content="橢圓" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18" Height="29" Width="60" Click="ShapeButton_Click" Tag="Ellipse"/>
+            <ToolBar HorizontalAlignment="Left" Height="40" VerticalAlignment="Center" Width="186" Margin="-1,0,0,0">
+                <RadioButton HorizontalAlignment="Left" VerticalAlignment="Center" Height="29" Width="40" Click="ShapeButton_Click" Tag="Line" IsChecked="True">
+                    <RadioButton.Background>
+                        <ImageBrush ImageSource="/line.png" Stretch="Uniform"/>
+                    </RadioButton.Background>
+                </RadioButton>
+                <RadioButton HorizontalAlignment="Left" VerticalAlignment="Center" Height="29" Width="40" Click="ShapeButton_Click" Tag="Rectangle">
+                    <RadioButton.Background>
+                        <ImageBrush ImageSource="/rectangle.png" Stretch="Uniform"/>
+                    </RadioButton.Background>
+                </RadioButton>
+                <RadioButton HorizontalAlignment="Left" VerticalAlignment="Center" Height="29" Width="40" Click="ShapeButton_Click" Tag="Ellipse">
+                    <RadioButton.Background>
+                        <ImageBrush ImageSource="/ellipse.png" Stretch="Uniform"/>
+                    </RadioButton.Background>
+                </RadioButton>
+                <RadioButton HorizontalAlignment="Left" VerticalAlignment="Center" Height="29" Width="40" Click="ShapeButton_Click" Tag="Polyline">
+                    <RadioButton.Background>
+                        <ImageBrush ImageSource="/polyline.png" Stretch="Uniform"/>
+                    </RadioButton.Background>
+                </RadioButton>
+            </ToolBar>
+            <ToolBar Width="130" Background="#FFD8EAFF" Margin="-4,0,4,0">
+                <Button FontSize="14" Width="50" VerticalAlignment="Center" Click="eraserButton_Click" >
+                    <Image x:Name="eraserButton" Height="29" Width="40" Source="/eraser.png" >
+                        <Image.OpacityMask>
+                            <ImageBrush ImageSource="/eraser.png"/>
+                        </Image.OpacityMask>
+                    </Image>
+                </Button>
+                <Button FontSize="14" Width="50" VerticalAlignment="Center" Click="clearMenuItem_Click" >
+                    <Image x:Name="clearButton" Height="29" Width="40" Source="/trashcan.png" >
+                        <Image.OpacityMask>
+                            <ImageBrush ImageSource="/trashcan.png"/>
+                        </Image.OpacityMask>
+                    </Image>
+                </Button>
             </ToolBar>
         </ToolBarTray>
         <Canvas x:Name="myCanvas" DockPanel.Dock="Top" Background="#FFFFFDF5" Height="590" MouseLeftButtonDown="myCanvas_MouseLeftButtonDown" MouseMove="myCanvas_MouseMove" MouseLeftButtonUp="myCanvas_MouseLeftButtonUp"/>
